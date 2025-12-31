@@ -1,14 +1,57 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from 'react';
+import Sidebar from '@/components/Sidebar';
+import ChatList from '@/components/ChatList';
+import ChatWindow from '@/components/ChatWindow';
+import ProfilePanel from '@/components/ProfilePanel';
 
-const Index = () => {
+export default function Index() {
+  const [activeTab, setActiveTab] = useState<'chats' | 'contacts' | 'profile' | 'settings'>('chats');
+  const [selectedChatId, setSelectedChatId] = useState<string | undefined>();
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4 color-black text-black">Добро пожаловать!</h1>
-        <p className="text-xl text-gray-600">тут будет отображаться ваш проект</p>
-      </div>
+    <div className="h-screen flex overflow-hidden">
+      <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
+      
+      {activeTab === 'chats' && (
+        <>
+          <div className="w-80">
+            <ChatList onChatSelect={setSelectedChatId} selectedChatId={selectedChatId} />
+          </div>
+          <div className="flex-1">
+            <ChatWindow chatId={selectedChatId} />
+          </div>
+        </>
+      )}
+
+      {activeTab === 'profile' && (
+        <div className="flex-1">
+          <ProfilePanel />
+        </div>
+      )}
+
+      {activeTab === 'contacts' && (
+        <div className="flex-1 flex items-center justify-center bg-card">
+          <div className="text-center">
+            <div className="w-24 h-24 mx-auto mb-4 gradient-primary rounded-full flex items-center justify-center">
+              <span className="text-4xl">👥</span>
+            </div>
+            <h2 className="text-2xl font-heading font-bold mb-2">Контакты</h2>
+            <p className="text-muted-foreground">Здесь будет список ваших контактов</p>
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'settings' && (
+        <div className="flex-1 flex items-center justify-center bg-card">
+          <div className="text-center">
+            <div className="w-24 h-24 mx-auto mb-4 gradient-primary rounded-full flex items-center justify-center">
+              <span className="text-4xl">⚙️</span>
+            </div>
+            <h2 className="text-2xl font-heading font-bold mb-2">Настройки</h2>
+            <p className="text-muted-foreground">Здесь будут настройки приложения</p>
+          </div>
+        </div>
+      )}
     </div>
   );
-};
-
-export default Index;
+}
