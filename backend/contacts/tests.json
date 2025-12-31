@@ -1,0 +1,25 @@
+{
+  "tests": [
+    {
+      "name": "Get contacts without auth",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 401,
+      "expectedBody": {
+        "error": "Unauthorized"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Add contact without phone",
+      "method": "POST",
+      "path": "/",
+      "headers": {
+        "Authorization": "Bearer test-token"
+      },
+      "body": {},
+      "expectedStatus": 400,
+      "bodyMatcher": "partial"
+    }
+  ]
+}

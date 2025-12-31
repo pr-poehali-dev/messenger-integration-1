@@ -1,0 +1,27 @@
+{
+  "tests": [
+    {
+      "name": "Get messages without auth",
+      "method": "GET",
+      "path": "/?chat_id=1",
+      "expectedStatus": 401,
+      "expectedBody": {
+        "error": "Unauthorized"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Send message without chat_id",
+      "method": "POST",
+      "path": "/",
+      "headers": {
+        "Authorization": "Bearer test-token"
+      },
+      "body": {
+        "content": "Hello"
+      },
+      "expectedStatus": 400,
+      "bodyMatcher": "partial"
+    }
+  ]
+}

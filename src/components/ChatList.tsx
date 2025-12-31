@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import Icon from '@/components/ui/icon';
+import AddContactDialog from './AddContactDialog';
 
 interface Chat {
   id: string;
@@ -32,21 +34,32 @@ const mockChats: Chat[] = [
 interface ChatListProps {
   onChatSelect: (chatId: string) => void;
   selectedChatId?: string;
+  authToken: string;
 }
 
-export default function ChatList({ onChatSelect, selectedChatId }: ChatListProps) {
+export default function ChatList({ onChatSelect, selectedChatId, authToken }: ChatListProps) {
   const [searchQuery, setSearchQuery] = useState('');
+  const [addContactOpen, setAddContactOpen] = useState(false);
 
   const filteredChats = mockChats.filter((chat) =>
     chat.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const handleContactAdded = (data: any) => {
+    console.log('Contact added:', data);
+  };
+
   return (
     <div className="flex flex-col h-full bg-card border-r border-border">
       <div className="p-4 border-b border-border">
-        <h1 className="text-2xl font-heading font-bold mb-4 gradient-text">
-          Messenger
-        </h1>
+        <div className="flex items-center justify-between mb-4">
+          <h1 className="text-2xl font-heading font-bold gradient-text">
+            Messenger
+          </h1>
+          <Button size="icon" variant="ghost" onClick={() => setAddContactOpen(true)}>
+            <Icon name="UserPlus" size={20} />
+          </Button>
+        </div>
         <div className="relative">
           <Icon name="Search" className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
           <Input
@@ -57,6 +70,13 @@ export default function ChatList({ onChatSelect, selectedChatId }: ChatListProps
           />
         </div>
       </div>
+
+      <AddContactDialog
+        open={addContactOpen}
+        onOpenChange={setAddContactOpen}
+        authToken={authToken}
+        onContactAdded={handleContactAdded}
+      />
 
       <ScrollArea className="flex-1">
         <div className="p-2">
