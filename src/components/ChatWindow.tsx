@@ -16,37 +16,23 @@ interface Message {
 const mockMessages: Message[] = [
   {
     id: '1',
-    text: 'Привет! Как дела?',
+    text: 'Добро пожаловать в безопасный мессенджер! 🎉',
     sender: 'other',
     time: '12:30',
     encrypted: true,
   },
   {
     id: '2',
-    text: 'Отлично! А у тебя?',
-    sender: 'me',
-    time: '12:32',
+    text: 'Ваш код подтверждения: 123456',
+    sender: 'other',
+    time: '12:31',
     encrypted: true,
   },
   {
     id: '3',
-    text: 'Тоже хорошо, спасибо 😊',
+    text: 'Все ваши сообщения защищены сквозным шифрованием E2E 🔒',
     sender: 'other',
-    time: '12:33',
-    encrypted: true,
-  },
-  {
-    id: '4',
-    text: 'Можешь посмотреть документы?',
-    sender: 'other',
-    time: '12:35',
-    encrypted: true,
-  },
-  {
-    id: '5',
-    text: 'Конечно, сейчас проверю',
-    sender: 'me',
-    time: '12:40',
+    time: '12:32',
     encrypted: true,
   },
 ];
@@ -88,11 +74,11 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
           <Avatar>
             <AvatarImage src="" />
             <AvatarFallback className="gradient-primary text-white font-semibold">
-              АИ
+              🤖
             </AvatarFallback>
           </Avatar>
           <div>
-            <h2 className="font-heading font-semibold">Анна Иванова</h2>
+            <h2 className="font-heading font-semibold">Официальный бот</h2>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Icon name="Lock" size={12} className="text-primary" />
               <span>Сквозное шифрование</span>
@@ -100,12 +86,6 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon">
-            <Icon name="Phone" size={20} />
-          </Button>
-          <Button variant="ghost" size="icon">
-            <Icon name="Video" size={20} />
-          </Button>
           <Button variant="ghost" size="icon">
             <Icon name="MoreVertical" size={20} />
           </Button>
@@ -125,7 +105,7 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
                 <Avatar className="w-8 h-8">
                   <AvatarImage src="" />
                   <AvatarFallback className="gradient-primary text-white text-xs">
-                    АИ
+                    🤖
                   </AvatarFallback>
                 </Avatar>
               )}

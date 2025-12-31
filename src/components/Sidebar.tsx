@@ -10,8 +10,7 @@ interface SidebarProps {
 
 export default function Sidebar({ activeTab, onTabChange }: SidebarProps) {
   const tabs = [
-    { id: 'chats' as const, icon: 'MessageCircle', label: 'Чаты', badge: 3 },
-    { id: 'contacts' as const, icon: 'Users', label: 'Контакты' },
+    { id: 'chats' as const, icon: 'MessageCircle', label: 'Чаты', badge: 1 },
     { id: 'profile' as const, icon: 'User', label: 'Профиль' },
     { id: 'settings' as const, icon: 'Settings', label: 'Настройки' },
   ];

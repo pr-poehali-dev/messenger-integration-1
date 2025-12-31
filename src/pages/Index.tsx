@@ -3,10 +3,35 @@ import Sidebar from '@/components/Sidebar';
 import ChatList from '@/components/ChatList';
 import ChatWindow from '@/components/ChatWindow';
 import ProfilePanel from '@/components/ProfilePanel';
+import SettingsPanel from '@/components/SettingsPanel';
+import AuthScreen from '@/components/AuthScreen';
 
 export default function Index() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeTab, setActiveTab] = useState<'chats' | 'contacts' | 'profile' | 'settings'>('chats');
   const [selectedChatId, setSelectedChatId] = useState<string | undefined>();
+  const [userProfile, setUserProfile] = useState({
+    username: '',
+    phone: '',
+    bio: '',
+  });
+
+  const handleLogin = (username: string, phone: string) => {
+    setUserProfile({ username, phone, bio: '' });
+    setIsAuthenticated(true);
+  };
+
+  const handleProfileUpdate = (data: { name: string; bio: string; phone: string }) => {
+    setUserProfile({
+      username: data.name,
+      phone: data.phone,
+      bio: data.bio,
+    });
+  };
+
+  if (!isAuthenticated) {
+    return <AuthScreen onLogin={handleLogin} />;
+  }
 
   return (
     <div className="h-screen flex overflow-hidden">
@@ -25,31 +50,18 @@ export default function Index() {
 
       {activeTab === 'profile' && (
         <div className="flex-1">
-          <ProfilePanel />
-        </div>
-      )}
-
-      {activeTab === 'contacts' && (
-        <div className="flex-1 flex items-center justify-center bg-card">
-          <div className="text-center">
-            <div className="w-24 h-24 mx-auto mb-4 gradient-primary rounded-full flex items-center justify-center">
-              <span className="text-4xl">👥</span>
-            </div>
-            <h2 className="text-2xl font-heading font-bold mb-2">Контакты</h2>
-            <p className="text-muted-foreground">Здесь будет список ваших контактов</p>
-          </div>
+          <ProfilePanel
+            username={userProfile.username}
+            phone={userProfile.phone}
+            bio={userProfile.bio}
+            onProfileUpdate={handleProfileUpdate}
+          />
         </div>
       )}
 
       {activeTab === 'settings' && (
-        <div className="flex-1 flex items-center justify-center bg-card">
-          <div className="text-center">
-            <div className="w-24 h-24 mx-auto mb-4 gradient-primary rounded-full flex items-center justify-center">
-              <span className="text-4xl">⚙️</span>
-            </div>
-            <h2 className="text-2xl font-heading font-bold mb-2">Настройки</h2>
-            <p className="text-muted-foreground">Здесь будут настройки приложения</p>
-          </div>
+        <div className="flex-1">
+          <SettingsPanel />
         </div>
       )}
     </div>
